@@ -1,4 +1,4 @@
-# В разработке этого проекта я не участвовал с нуля , участвовал в написании сервисов коментирования , хранения медиа , исправлении багов
+# This was my first project on a microservice architecture, I got acquainted with message brokers (kafka), studied building a REST API, development methodology. Engaged in writing a service for storing user comments, as well as media files, in addition to fixing bugs
 
 
 # RM_Toolkit_Backend
