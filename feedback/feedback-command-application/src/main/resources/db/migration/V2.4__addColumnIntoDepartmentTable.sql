@@ -1,0 +1,1 @@
+alter table department add column version integer default 1;

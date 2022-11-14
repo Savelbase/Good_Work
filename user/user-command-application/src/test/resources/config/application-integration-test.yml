@@ -1,0 +1,28 @@
+spring:
+  datasource:
+#    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
+    url: jdbc:postgresql://localhost:5432/${RMTM_TEST_DB:test}
+#    driver-Class-Name: org.h2.Driver
+    driver-Class-Name: org.postgresql.Driver
+#    username: h2
+    username: ${PGUSER:postgres}
+#    password: h2
+    password: ${PGUSER:postgres}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  flyway:
+    locations:
+      - classpath:db/migration
+    baseline-on-migrate: true
+  cloud:
+    discovery:
+      enabled: false
+  kafka:
+    # Порт изменён на 9093, чтобы не пересекались с внешним Kafka
+    bootstrap-servers: localhost:9093
+    consumer:
+      # Найстрока для интеграционных тестов
+      auto-offset-reset: earliest

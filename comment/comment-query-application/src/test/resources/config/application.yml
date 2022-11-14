@@ -1,0 +1,44 @@
+server:
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: comment-query-service
+  kafka:
+    consumer:
+      group-id: comment-query
+      key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  jpa:
+    properties:
+      hibernate:
+        cache:
+          use_second_level_cache: true
+          region:
+            factory_class: jcache
+      javax:
+        cache:
+          provider: org.ehcache.jsr107.EhcacheCachingProvider
+        persistence:
+          sharedCache:
+            mode: ENABLE_SELECTIVE
+  flyway:
+    enabled: false
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+
+kafka:
+  topic:
+    comment: rmt-mobile.comment
+
+authentication:
+  token:
+    issuer: rmt_mobile_auth
+    type: Bearer
+    key: test

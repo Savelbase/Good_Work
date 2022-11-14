@@ -1,0 +1,70 @@
+server:
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: media-storage-command-service
+  datasource:
+    driver-Class-Name: org.postgresql.Driver
+    hikari:
+      leak-detection-threshold: 30000
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    consumer:
+      group-id: media-storage-command
+      key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  flyway:
+    locations:
+      - classpath:db/migration
+    baseline-on-migrate: true
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 3MB
+      max-request-size: 3MB
+      max-file-size: 3MB
+
+eureka:
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoint:
+    restart:
+      enabled: true
+    shutdown:
+      enabled: true
+    env:
+      post:
+        enabled: true
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+kafka:
+  topic:
+    auth: rmt-mobile.auth
+    user: rmt-mobile.user
+    department: rmt-mobile.department
+    role: rmt-mobile.role
+    media-storage: rmt-mobile.media-storage
+
+authentication:
+  token:
+    issuer: rmt_mobile_auth
+    type: Bearer
+
+upload:
+  path: ${UPLOAD_DIR}

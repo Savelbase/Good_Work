@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${GIT_REPO_URI}
+          username: ${GIT_REPO_USERNAME}
+          password: ${GIT_REPO_PASSWORD}
+          search-paths: configs/{application}
+        default-label: develop
+
+logging:
+  file:
+    name: ${RMTM_LOG_DIR}/config-server.log

@@ -1,0 +1,38 @@
+server:
+  port: 0
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${RMTM_DB_HOST}:${RMTM_DB_PORT:5432}/${RMTM_ONE_TO_ONE_COMMAND_DB}
+    username: ${RMTM_DB_USER}
+    password: ${RMTM_DB_PASSWORD}
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT:9092}
+  flyway:
+    locations:
+      - classpath:db/migration
+      - classpath:db/testdata
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_HOST}:${EUREKA_PORT:8761}/eureka/
+
+logging:
+  file:
+    name: ${RMTM_LOG_DIR}/one-to-one-command-service.log
+
+authentication:
+  token:
+    key: ${JWT_KEY}
+
+# Роль, которые нельзя удалять
+role:
+  employee: 579fc993-6123-419a-ae3c-96b0b230f834
+  admin: 96a9b5e3-f523-499f-87ad-ed9f7c17be4a
+
+department:
+  # Отдел, в котором состоит только HRM
+  administration: a185b51f-2fd4-4f76-a765-de199d32b000
+  # Отдел для тех, кто остался без отдела
+  empty: 3a9b4a8a-9e8c-4b72-b3cd-4e72090c259b

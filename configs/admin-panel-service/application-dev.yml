@@ -1,0 +1,8 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_HOST}:${EUREKA_PORT:8761}/eureka/
+
+logging:
+  file:
+    name: ${RMTM_LOG_DIR}/admin-panel-service.log

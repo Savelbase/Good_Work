@@ -1,0 +1,10 @@
+spring:
+  config:
+    import: configserver:http://${CONFIG_SERVER_HOST}:${CONFIG_SERVER_PORT:8149}
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"

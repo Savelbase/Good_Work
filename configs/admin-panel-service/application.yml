@@ -1,0 +1,24 @@
+server:
+  port: ${ADMIN_PANEL_PORT:8037}
+  forward-headers-strategy: framework
+
+spring:
+  boot:
+    admin:
+      discovery:
+        ignored-services: gateway-service
+
+management:
+  endpoint:
+    restart:
+      enabled: true
+    shutdown:
+      enabled: true
+    env:
+      post:
+        enabled: true
+    health:
+      show-details: always
+    web:
+      exposure:
+        include: "*"

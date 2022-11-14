@@ -1,0 +1,37 @@
+#spring:
+#  datasource:
+#    url: jdbc:h2:mem:testdb
+#    driver-Class-Name: org.h2.Driver
+#    username: h2
+#    password: h2
+#  jpa:
+#    database-platform: org.hibernate.dialect.H2Dialect
+#    hibernate:
+#      ddl-auto: create-drop
+#    show-sql: true
+#  flyway:
+#    enabled: false
+#  cloud:
+#    discovery:
+#      enabled: false
+#  kafka:
+#    bootstrap-servers: localhost:9093
+#    consumer:
+#      group-id: 2
+#      key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#eureka:
+#  client:
+#    enabled: false
+#
+#
+#authentication:
+#  token:
+#    key: test
+#    issuer: rmt_mobile_auth
+#    # 1 час
+#    accessTokenExpirationSec: 3600
+#    # 14 дней
+#    refreshTokenExpirationSec: 1209600
+#    type: Bearer
+#  maxLoginAttempts: 5

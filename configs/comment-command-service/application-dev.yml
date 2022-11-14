@@ -1,0 +1,27 @@
+server:
+  port: 0
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${RMTM_DB_HOST}:${RMTM_DB_PORT:5432}/${RMTM_COMMENT_COMMAND_DB}
+    username: ${RMTM_DB_USER}
+    password: ${RMTM_DB_PASSWORD}
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}:${KAFKA_PORT:9092}
+  flyway:
+    locations:
+      - classpath:db/migration
+      - classpath:db/testdata
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_HOST}:${EUREKA_PORT:8761}/eureka/
+
+logging:
+  file:
+    name: ${RMTM_LOG_DIR}/comment-command.log
+
+authentication:
+  token:
+    key: test

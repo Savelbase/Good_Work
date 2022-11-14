@@ -1,0 +1,71 @@
+server:
+  forward-headers-strategy: framework
+
+eureka:
+  client:
+    enabled: false
+
+spring:
+  application:
+    name: auth-service
+  kafka:
+    consumer:
+      group-id: auth
+      key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  jpa:
+    properties:
+      hibernate:
+        cache:
+          use_second_level_cache: true
+          region:
+            factory_class: jcache
+      javax:
+        cache:
+          provider: org.ehcache.jsr107.EhcacheCachingProvider
+        persistence:
+          sharedCache:
+            mode: ENABLE_SELECTIVE
+  flyway:
+    locations:
+      - classpath:db/migration
+    baseline-on-migrate: true
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+  mail:
+    host: null
+    port: 0
+    username: null
+    password: null
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+kafka:
+  topic:
+    auth: rmt-mobile.auth
+    user: rmt-mobile.user
+    role: rmt-mobile.role
+
+authentication:
+  token:
+    issuer: rmt_mobile_auth
+    # 1 час
+    accessTokenExpirationSec: 3600
+    # 9 часов
+    refreshTokenExpirationSec: 32400
+    type: Bearer
+  maxLoginAttempts: 5
+
+role:
+  # Роль Employee нельзя удалить, она базовая
+  employee: 579fc993-6123-419a-ae3c-96b0b230f834

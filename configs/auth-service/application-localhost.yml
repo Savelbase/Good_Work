@@ -1,0 +1,27 @@
+server:
+  port: ${AUTH_SERVICE_PORT:8085}
+
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/${RMTM_AUTH_DB:rmt_mobile_auth}
+    username: ${RMTM_DB_USER:rmt_mobile}
+    password: ${RMTM_DB_PASSWORD:rmt_mobile}
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST:::1}:9092
+  flyway:
+    locations:
+      - classpath:db/migration
+      - classpath:db/testdata
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:${EUREKA_PORT:8761}/eureka/
+
+authentication:
+  token:
+    key: test
+
+role:
+  # Роль Employee нельзя удалить, она базовая
+  employee: 579fc993-6123-419a-ae3c-96b0b230f834

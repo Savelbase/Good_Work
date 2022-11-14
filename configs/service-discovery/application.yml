@@ -1,0 +1,28 @@
+server:
+  port: ${EUREKA_PORT:8761}
+  forward-headers-strategy: native
+
+spring:
+  application:
+    name: service-discovery
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+
+management:
+  endpoint:
+    restart:
+      enabled: true
+    shutdown:
+      enabled: true
+    env:
+      post:
+        enabled: true
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -1,0 +1,7 @@
+server:
+  port: ${CONFIG_SERVER_PORT_A:8149}
+
+spring:
+  application:
+    name: config-server
+

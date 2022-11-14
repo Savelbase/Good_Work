@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS media_storage ADD COLUMN user_id VARCHAR(45);

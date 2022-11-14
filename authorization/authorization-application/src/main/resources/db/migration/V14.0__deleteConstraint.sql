@@ -1,0 +1,2 @@
+ALTER TABLE role DROP COLUMN IF EXISTS is_deleted;
+ALTER TABLE users DROP CONSTRAINT IF EXISTS cx_users_email;

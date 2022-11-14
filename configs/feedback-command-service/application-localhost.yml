@@ -1,0 +1,23 @@
+server:
+  port: ${FEEDBACK_COMMAND_SERVICE_PORT:8096}
+
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/${RMTM_FEEDBACK_COMMAND_DB:rmt_mobile_feedback_command}
+    username: ${RMTM_DB_USER:rmt_mobile}
+    password: ${RMTM_DB_PASSWORD:rmt_mobile}
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST:::1}:9092
+  flyway:
+    locations:
+      - classpath:db/migration
+      - classpath:db/testdata
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:${EUREKA_PORT:8761}/eureka/
+
+authentication:
+  token:
+    key: test

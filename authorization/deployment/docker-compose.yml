@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+
+  authorization-application:
+    build:
+      context: ../authorization-application
+      dockerfile: Dockerfile
+    image: authorization-application
+    environment:
+      - SPRING_PROILES_ACTIVE=test-hosts
+
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres

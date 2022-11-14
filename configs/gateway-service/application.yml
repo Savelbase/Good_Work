@@ -1,0 +1,134 @@
+server:
+  port: ${GATEWAY_PORT:8769}
+  forward-headers-strategy: native
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: auth-service-openapi
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/v3/api-docs
+            - Method=GET
+          filters:
+            - RewritePath=/auth/v3/api-docs, /v3/api-docs
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+          filters:
+            - RewritePath=/auth/auth/(?<path>.*), /auth/$\{path}
+        - id: email-sender-command-service-openapi
+          uri: lb://email-sender-command-service
+          predicates:
+            - Path=/email-sender-command/v3/api-docs
+            - Method=GET
+          filters:
+            - RewritePath=/email-sender-command/v3/api-docs, /v3/api-docs
+        - id: email-sender-command-service
+          uri: lb://email-sender-command-service
+          predicates:
+            - Path=/email-sender-command-service/**
+          filters:
+            - RewritePath=/email-sender-command/(?<path>.*), /$\{path}
+        - id: user-command-service-openapi
+          uri: lb://user-command-service
+          predicates:
+            - Path=/user-command/v3/api-docs
+            - Method=GET
+          filters:
+            - RewritePath=/user-command/v3/api-docs, /v3/api-docs
+        - id: user-command-service
+          uri: lb://user-command-service
+          predicates:
+            - Path=/api/v**/users/**, /api/v**/departments/**, /api/v**/roles/**, /user-command/**
+            - Method=POST, PUT, PATCH, DELETE
+          filters:
+            - RewritePath=/user-command/(?<path>.*), /$\{path}
+        - id: user-query-service-openapi
+          uri: lb://user-query-service
+          predicates:
+            - Path=/user-query/v3/api-docs
+            - Method=GET
+          filters:
+            - RewritePath=/user-query/v3/api-docs, /v3/api-docs
+        - id: user-query-service
+          uri: lb://user-query-service
+          predicates:
+            - Path=/api/v**/users/**, /api/v**/activities/**, /api/v**/authorities/**, /api/v**/countries/**,
+              /api/v**/departments/**, /api/v**/me/**, /api/v**/roles/**, /user-query/**
+            - Method=GET, HEAD
+          filters:
+            - RewritePath=/user-query/(?<path>.*), /$\{path}
+        - id: openapi
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+        - id: one-to-one-command-service-openapi
+          uri: lb://one-to-one-command-service
+          predicates:
+            - Path=/one-to-one-command/v3/api-docs
+            - Method=GET
+          filters:
+            - RewritePath=/one-to-one-command/v3/api-docs, /v3/api-docs
+        - id: one-to-one-command-service
+          uri: lb://one-to-one-command-service
+          predicates:
+            - Path=/api/121/**, /one-to-one-command/**
+            - Method=POST, PATCH, DELETE
+          filters:
+            - RewritePath=/one-to-one-command/(?<path>.*), /$\{path}
+        - id: one-to-one-query-service-openapi
+          uri: lb://one-to-one-query-service
+          predicates:
+            - Path=/one-to-one-query/v3/api-docs
+            - Method=GET
+          filters:
+            - RewritePath=/one-to-one-query/v3/api-docs, /v3/api-docs
+        - id: one-to-one-query-service
+          uri: lb://one-to-one-query-service
+          predicates:
+            - Path=/api/121/**, /one-to-one-query/**
+            - Method=GET
+          filters:
+            - RewritePath=/one-to-one-query/(?<path>.*), /$\{path}
+        - id: media-storage-command-service-openapi
+          uri: lb://media-storage-command-service
+          predicates:
+            - Path=/media-storage-command/v3/api-docs
+            - Method=GET
+          filters:
+            - RewritePath=/media-storage-command/v3/api-docs, /v3/api-docs
+        - id: media-storage-command-service
+          uri: lb://media-storage-command-service
+          predicates:
+            - Path=/api/files/**, /media-storage-command/**
+            - Method=POST
+          filters:
+            - RewritePath=/media-storage-command/(?<path>.*), /$\{path}
+        - id: media-storage-query-service-openapi
+          uri: lb://media-storage-query-service
+          predicates:
+            - Path=/media-storage-query/v3/api-docs
+            - Method=GET
+          filters:
+             - RewritePath=/media-storage-query/v3/api-docs, /v3/api-docs
+        - id: media-storage-query-service
+          uri: lb://media-storage-query-service
+          predicates:
+              - Path=/api/files/**, /media-storage-query/**
+              - Method=GET, HEAD
+          filters:
+              - RewritePath=/media-storage-query/(?<path>.*), /$\{path}
+
+eureka:
+  instance:
+    prefer-ip-address: true

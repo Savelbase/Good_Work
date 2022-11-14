@@ -1,0 +1,3 @@
+logging:
+  file:
+    name: ${RMTM_LOG_DIR}/service-discovery.log
